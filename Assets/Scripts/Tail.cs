@@ -8,12 +8,15 @@ using UnityEngine;
 public class Tail : MonoBehaviour
 {
     public float pointSpacing = .1f;
-    public Transform snake;
+    public Transform head;
+    public GameObject TailPrefab;
 
 	private LineRenderer line;
     private List<Vector2> points;
     private EdgeCollider2D col;
     private bool draw = true;
+    private IEnumerator drawCoroutine;
+    private (float, float) deltaGap = (0.3f, 0.6f);
 
     private void Start()
     {
@@ -24,33 +27,28 @@ public class Tail : MonoBehaviour
 
         SetPoint();
 
-        StartCoroutine(SetDraw());
+        drawCoroutine = SetDraw();
+        StartCoroutine(drawCoroutine);
 
     }
 
     private IEnumerator SetDraw()
-	{
-        while(true)
-		{
+    {
+        while (draw)
+        {
             yield return new WaitForSeconds(Random.Range(3f, 5f));
             draw = false;
-            yield return new WaitForSeconds(Random.Range(0.5f, 1f));
-            draw = true;
+            yield return new WaitForSeconds(Random.Range(deltaGap.Item1, deltaGap.Item2));
+            Instantiate(TailPrefab, transform.parent);
+            StopCoroutine(drawCoroutine);
         }
     }
 
     private void Update()
     {
-        if (Vector3.Distance(points.Last(), snake.position) > pointSpacing)
+        if (Vector3.Distance(points.Last(), head.position) > pointSpacing && draw)
         {
-            if (draw)
-			{
-                SetPoint();
-            }
-            else
-			{
-                gameObject.AddComponent(typeof(LineRenderer));
-			}
+            SetPoint();
         }
     }
 
@@ -61,10 +59,10 @@ public class Tail : MonoBehaviour
             col.points = points.ToArray<Vector2>();
         }
 
-        points.Add(snake.position);
+        points.Add(head.position);
 
         line.positionCount = points.Count;
-		line.SetPosition(points.Count - 1, snake.position);
+		line.SetPosition(points.Count - 1, head.position);
     }
 
 }
