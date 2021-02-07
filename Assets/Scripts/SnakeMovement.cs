@@ -15,7 +15,6 @@ public class SnakeMovement : MonoBehaviour
 	void FixedUpdate()
 	{
 		transform.Translate(Vector2.up * speed * Time.fixedDeltaTime, Space.Self);
-		// for reverse rotation I can use just horizontal (without the minus value)
 		transform.Rotate(Vector3.forward * -horizontal * rotationSpeed * Time.fixedDeltaTime);
 	}
 

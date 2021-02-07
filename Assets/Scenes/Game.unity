@@ -259,7 +259,7 @@ GameObject:
   - component: {fileID: 1067096730}
   - component: {fileID: 1067096729}
   m_Layer: 0
-  m_Name: walls
+  m_Name: Walls
   m_TagString: killsPlayer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
