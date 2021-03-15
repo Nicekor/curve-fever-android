@@ -5,13 +5,11 @@ using Photon.Realtime;
 
 public class Launcher : MonoBehaviourPunCallbacks
 {
-	public GameObject RoomSettingsPanel;
 	public GameObject LoadingPanel;
 	public Animator logoAnimator;
 	public Text infoText;
 	public GameObject RetryButton;
 
-	private byte maxPlayersPerRoom = 4;
 	string gameVersion = "1";
 	bool isConnecting;
 
@@ -20,9 +18,9 @@ public class Launcher : MonoBehaviourPunCallbacks
 		PhotonNetwork.AutomaticallySyncScene = true;
 	}
 
-	public void TriggerRoomSettings(bool value)
+	private void Start()
 	{
-		RoomSettingsPanel.SetActive(value);
+		Connect();
 	}
 
 	public void Connect()
@@ -34,6 +32,8 @@ public class Launcher : MonoBehaviourPunCallbacks
 		else
 		{
 			LoadingPanel.SetActive(true);
+			infoText.color = Color.white;
+			infoText.text = "Connecting...";
 			logoAnimator.enabled = true;
 			RetryButton.SetActive(false);
 			isConnecting = PhotonNetwork.ConnectUsingSettings();
@@ -43,11 +43,12 @@ public class Launcher : MonoBehaviourPunCallbacks
 
 	public override void OnConnectedToMaster()
 	{
+		LoadingPanel.SetActive(false);
 		Debug.Log("Connecting Using Settings worked fine and I am now connected");
+		PhotonNetwork.JoinLobby(TypedLobby.Default);
 		if (isConnecting)
 		{
 			isConnecting = false;
-			// create room
 		}
 
 	}
@@ -57,8 +58,8 @@ public class Launcher : MonoBehaviourPunCallbacks
 	{
 		RetryButton.SetActive(true);
 		logoAnimator.enabled = false;
-		infoText.text = "Network connection failed";
 		infoText.color = Color.red;
+		infoText.text = "Network connection failed";
 		isConnecting = false;
 		Debug.LogWarningFormat("Cause of disconnection: {0}", cause);
 	}
