@@ -5,8 +5,6 @@ using Photon.Pun;
 [RequireComponent(typeof(InputField))]
 public class UsernameInputField : MonoBehaviour
 {
-	const string usernamePrefKey = "Username";
-
 	private void Start()
 	{
 		string defaultName = string.Empty;
@@ -14,9 +12,9 @@ public class UsernameInputField : MonoBehaviour
 
 		if (_inputField != null)
 		{
-			if (PlayerPrefs.HasKey(usernamePrefKey))
+			if (PlayerPrefs.HasKey(PlayerPrefsConstants.USERNAME))
 			{
-				defaultName = PlayerPrefs.GetString(usernamePrefKey);
+				defaultName = PlayerPrefs.GetString(PlayerPrefsConstants.USERNAME);
 				_inputField.text = defaultName;
 			}
 		}
@@ -34,6 +32,6 @@ public class UsernameInputField : MonoBehaviour
 		}
 		PhotonNetwork.NickName = username;
 
-		PlayerPrefs.SetString(usernamePrefKey, username);
+		PlayerPrefs.SetString(PlayerPrefsConstants.USERNAME, username);
 	}
 }
