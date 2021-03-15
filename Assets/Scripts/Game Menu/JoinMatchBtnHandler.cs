@@ -3,8 +3,10 @@ using UnityEngine.SceneManagement;
 
 public class JoinMatchBtnHandler : MonoBehaviour
 {
-    public void LoadRoomsScene()
+	[SerializeField] private GameObject JoinRoomMenu;
+
+	public void ShowJoinRoomMenu()
 	{
-		SceneManager.LoadScene(2);
+		JoinRoomMenu.SetActive(true);
 	}
 }
