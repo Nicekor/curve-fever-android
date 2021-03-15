@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
+using System.Collections.Generic;
 
 public class Launcher : MonoBehaviourPunCallbacks
 {
@@ -44,13 +45,12 @@ public class Launcher : MonoBehaviourPunCallbacks
 	public override void OnConnectedToMaster()
 	{
 		LoadingPanel.SetActive(false);
+		PhotonNetwork.JoinLobby();
 		Debug.Log("Connecting Using Settings worked fine and I am now connected");
-		PhotonNetwork.JoinLobby(TypedLobby.Default);
 		if (isConnecting)
 		{
 			isConnecting = false;
 		}
-
 	}
 
 	// Called after disconnecting from the Photon server. It could be a failure or an explicit disconnect call 
@@ -62,5 +62,10 @@ public class Launcher : MonoBehaviourPunCallbacks
 		infoText.text = "Network connection failed";
 		isConnecting = false;
 		Debug.LogWarningFormat("Cause of disconnection: {0}", cause);
+	}
+
+	public override void OnJoinedLobby()
+	{
+		Debug.Log("Joined lobby");
 	}
 }
