@@ -19,7 +19,7 @@ public class TypeButtons : MonoBehaviour
 	// TODO: Improve code, could render different stuff based on a boolean value
 	public void OnPublicBtnClick()
 	{
-        RoomManager.Instance.RoomType = "PUBLIC";
+        RoomManager.roomType = "PUBLIC";
 
         publicBtn.GetComponent<Image>().color = selectedColour;
         publicBtnText.color = selectedTextColour;
@@ -34,7 +34,7 @@ public class TypeButtons : MonoBehaviour
 
     public void OnPrivateBtnClick()
 	{
-        RoomManager.Instance.RoomType = "PRIVATE";
+        RoomManager.roomType = "PRIVATE";
 
         publicBtn.GetComponent<Image>().color = notSelectedColour;
         publicBtnText.color = notSelectedTextColour;
