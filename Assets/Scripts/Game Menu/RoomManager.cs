@@ -10,14 +10,25 @@ public class RoomManager : MonoBehaviourPunCallbacks
 	public static string roomType = "PUBLIC";
 	private string roomPassword = "";
 	private byte maxPlayers = 4;
+	private List<Room> listings = new List<Room>();
 
 	[SerializeField] private Text roomNameText;
 	[SerializeField] private Text roomPasswordText;
-	[SerializeField] private Room Room;
-	[SerializeField] private Transform RoomsListContent;
+	[SerializeField] private Room roomPrefab;
+	[SerializeField] private Transform roomsListContent;
 
-	private const string ROOM_TYPE_PROP_KEY = "rt";
-	private const string ROOM_PW_PROP_KEY = "rp";
+	public const string ROOM_TYPE_PROP_KEY = "rt";
+	public const string ROOM_PW_PROP_KEY = "rp";
+
+	private void Start()
+	{
+		PhotonNetwork.JoinLobby();
+	}
+
+	public override void OnJoinedLobby()
+	{
+		Debug.Log("Joined lobby");
+	}
 
 	public void CreateMatchRoom()
 	{
@@ -28,10 +39,14 @@ public class RoomManager : MonoBehaviourPunCallbacks
 			// display error to the user
 			return;
 		}
-		if (roomType.Equals("PRIVATE") && string.IsNullOrEmpty(roomPassword))
+		if (roomType.Equals("PRIVATE"))
 		{
-			// display error to the user
-			return;
+			if (string.IsNullOrEmpty(roomPassword))
+			{
+				// display error to the user
+				return;
+			}
+
 		}
 		// todo: instantiate the logo probablyyy
 		if (!PhotonNetwork.IsConnected)
@@ -40,8 +55,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
 		}
 		RoomOptions roomOptions = new RoomOptions();
 		roomOptions.MaxPlayers = maxPlayers;
-		roomOptions.IsVisible = true;
-		roomOptions.IsOpen = true;
+		roomOptions.CustomRoomPropertiesForLobby = new string[] { ROOM_TYPE_PROP_KEY, ROOM_PW_PROP_KEY };
 		roomOptions.CustomRoomProperties = new Hashtable { { ROOM_TYPE_PROP_KEY, roomType }, { ROOM_PW_PROP_KEY, roomPassword } };
 		PhotonNetwork.CreateRoom(roomName, roomOptions, TypedLobby.Default);
 	}
@@ -82,10 +96,27 @@ public class RoomManager : MonoBehaviourPunCallbacks
 		Debug.Log("onroomlistupdate from RoomManager");
 		foreach (RoomInfo info in roomList)
 		{
-			Room room = Instantiate(Room, RoomsListContent);
-			if (room != null)
+			if (info.RemovedFromList)
 			{
-				room.SetRoomInfo(info);
+				int index = listings.FindIndex(x => x.RoomInfo.Name == info.Name);
+				if (index != -1)
+				{
+					Destroy(listings[index].gameObject);
+					listings.RemoveAt(index);
+				}
+			}
+			else
+			{
+				print(info.CustomProperties[ROOM_TYPE_PROP_KEY]);
+				Room room = Instantiate(roomPrefab, roomsListContent);
+				if (room != null)
+				{
+					room.SetRoomInfo(info);
+					listings.Add(room);
+					// todo: SetAccentBgColor for odd rows
+					// add icon to private rooms
+				}
+				
 			}
 		}
 	}

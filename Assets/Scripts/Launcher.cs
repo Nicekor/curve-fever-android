@@ -44,7 +44,6 @@ public class Launcher : MonoBehaviourPunCallbacks
 	public override void OnConnectedToMaster()
 	{
 		LoadingPanel.SetActive(false);
-		PhotonNetwork.JoinLobby();
 		Debug.Log("Connecting Using Settings worked fine and I am now connected");
 		if (isConnecting)
 		{
@@ -61,10 +60,5 @@ public class Launcher : MonoBehaviourPunCallbacks
 		infoText.text = "Network connection failed";
 		isConnecting = false;
 		Debug.LogWarningFormat("Cause of disconnection: {0}", cause);
-	}
-
-	public override void OnJoinedLobby()
-	{
-		Debug.Log("Joined lobby");
 	}
 }
