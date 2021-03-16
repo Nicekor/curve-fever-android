@@ -4,10 +4,38 @@ using Photon.Realtime;
 
 public class Room : MonoBehaviour
 {
-    [SerializeField] private Text _text;
+	[SerializeField] private Text roomNameText;
+	[SerializeField] private Text roomPlayersText;
+	[SerializeField] GameObject privateRoomIcon;
+	[SerializeField] Image joinBtnImg;
+	[SerializeField] Text joinBtnText;
 
-    public void SetRoomInfo(RoomInfo roomInfo)
+	private Image roomImage;
+
+	public RoomInfo RoomInfo { get; private set; }
+
+	public void SetRoomInfo(RoomInfo roomInfo)
 	{
-		_text.text = roomInfo.MaxPlayers + ", " + roomInfo.Name;
+		RoomInfo = roomInfo;
+		roomNameText.text = roomInfo.Name;
+		roomPlayersText.text = roomInfo.PlayerCount + "/" + roomInfo.MaxPlayers;
+
+		if (roomInfo.CustomProperties[RoomManager.ROOM_TYPE_PROP_KEY].Equals("PRIVATE"))
+		{
+			privateRoomIcon.SetActive(true);
+			joinBtnImg.color = Theme.accentBtnBgColour;
+			joinBtnText.color = Theme.accentBtnTextColour;
+		} else
+		{
+			privateRoomIcon.SetActive(false);
+			joinBtnImg.color = Theme.primaryBtnBgColour;
+			joinBtnText.color = Theme.primaryBtnTextColour;
+		}
+	}
+
+	public void SetAccentBackgroundColor()
+	{
+		roomImage = gameObject.GetComponent<Image>();
+		roomImage.color = Theme.accentBgColour;
 	}
 }
