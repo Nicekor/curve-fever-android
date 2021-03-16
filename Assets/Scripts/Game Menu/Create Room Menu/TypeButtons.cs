@@ -11,24 +11,19 @@ public class TypeButtons : MonoBehaviour
     public Image publicBtnIco;
     public Image privateBtnIco;
 
-    private Color notSelectedColour = new Vector4(0f, 0.1176471f, 0.1607843f, 1f);
-    private Color selectedColour = new Vector4(0.2039216f, 0.6392157f, 0.8078431f, 1f);
-    private Color selectedTextColour = Color.white;
-	private Color notSelectedTextColour = new Vector4(0.03137255f, 0.2470588f, 0.3294118f, 1f);
-
 	// TODO: Improve code, could render different stuff based on a boolean value
 	public void OnPublicBtnClick()
 	{
         RoomManager.roomType = "PUBLIC";
 
-        publicBtn.GetComponent<Image>().color = selectedColour;
-        publicBtnText.color = selectedTextColour;
+        publicBtn.GetComponent<Image>().color = Theme.primaryBtnBgColour;
+        publicBtnText.color = Theme.primaryBtnTextColour;
         publicBtnIco.enabled = true;
 
         PasswordPanel.SetActive(false);
 
-        privateBtn.GetComponent<Image>().color = notSelectedColour;
-        privateBtnText.color = notSelectedTextColour;
+        privateBtn.GetComponent<Image>().color = Theme.notSelectedBtnColour;
+        privateBtnText.color = Theme.notSelectedTextColour;
         privateBtnIco.enabled = false;
     }
 
@@ -36,14 +31,14 @@ public class TypeButtons : MonoBehaviour
 	{
         RoomManager.roomType = "PRIVATE";
 
-        publicBtn.GetComponent<Image>().color = notSelectedColour;
-        publicBtnText.color = notSelectedTextColour;
+        publicBtn.GetComponent<Image>().color = Theme.notSelectedBtnColour;
+        publicBtnText.color = Theme.notSelectedTextColour;
         publicBtnIco.enabled = false;
 
         PasswordPanel.SetActive(true);
 
-        privateBtn.GetComponent<Image>().color = selectedColour;
-        privateBtnText.color = selectedTextColour;
+        privateBtn.GetComponent<Image>().color = Theme.primaryBtnBgColour;
+        privateBtnText.color = Theme.primaryBtnTextColour;
         privateBtnIco.enabled = true;
 	}
 
