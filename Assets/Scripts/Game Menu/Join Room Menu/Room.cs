@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using Photon.Realtime;
+using Photon.Pun;
 
 public class Room : MonoBehaviour
 {
@@ -37,5 +38,10 @@ public class Room : MonoBehaviour
 	{
 		roomImage = gameObject.GetComponent<Image>();
 		roomImage.color = Theme.accentBgColour;
+	}
+
+	public void JoinRoom()
+	{
+		PhotonNetwork.JoinRoom(RoomInfo.Name);
 	}
 }
