@@ -15,7 +15,7 @@ public class Launcher : MonoBehaviourPunCallbacks
 
 	private void Awake()
 	{
-		PhotonNetwork.AutomaticallySyncScene = true;
+        PhotonNetwork.AutomaticallySyncScene = true;
 	}
 
 	private void Start()
