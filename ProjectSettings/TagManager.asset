@@ -42,3 +42,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Line Renderer
+    uniqueID: 15770139
+    locked: 0
+  - name: Snake Head
+    uniqueID: 142039685
+    locked: 0
