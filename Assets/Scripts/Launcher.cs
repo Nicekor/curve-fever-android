@@ -5,17 +5,18 @@ using Photon.Realtime;
 
 public class Launcher : MonoBehaviourPunCallbacks
 {
-	public GameObject LoadingPanel;
-	public Animator logoAnimator;
-	public Text infoText;
-	public GameObject RetryButton;
+	[SerializeField] private LoadingLogo loadingLogoPrefab;
+	[SerializeField] private Transform canvasTransform;
 
-	string gameVersion = "1";
-	bool isConnecting;
+	private string gameVersion = "1";
+	private bool isConnecting;
+	private LoadingLogo loadingLogo;
 
 	private void Awake()
 	{
         PhotonNetwork.AutomaticallySyncScene = true;
+		loadingLogo = Instantiate(loadingLogoPrefab, canvasTransform);
+		loadingLogo.RetryBtn.GetComponent<Button>().onClick.AddListener(Connect);
 	}
 
 	private void Start()
@@ -31,11 +32,10 @@ public class Launcher : MonoBehaviourPunCallbacks
 		} 
 		else
 		{
-			LoadingPanel.SetActive(true);
-			infoText.color = Color.white;
-			infoText.text = "Connecting...";
-			logoAnimator.enabled = true;
-			RetryButton.SetActive(false);
+			loadingLogo.InfoText.color = Color.white;
+			loadingLogo.InfoText.text = "Connecting...";
+			loadingLogo.LogoAnimator.enabled = true;
+			loadingLogo.RetryBtn.SetActive(false);
 			isConnecting = PhotonNetwork.ConnectUsingSettings();
 			PhotonNetwork.GameVersion = gameVersion;
 		}
@@ -43,7 +43,7 @@ public class Launcher : MonoBehaviourPunCallbacks
 
 	public override void OnConnectedToMaster()
 	{
-		LoadingPanel.SetActive(false);
+		Destroy(loadingLogo.gameObject);
 		Debug.Log("Connecting Using Settings worked fine and I am now connected");
 		if (isConnecting)
 		{
@@ -54,10 +54,10 @@ public class Launcher : MonoBehaviourPunCallbacks
 	// Called after disconnecting from the Photon server. It could be a failure or an explicit disconnect call 
 	public override void OnDisconnected(DisconnectCause cause)
 	{
-		RetryButton.SetActive(true);
-		logoAnimator.enabled = false;
-		infoText.color = Color.red;
-		infoText.text = "Network connection failed";
+		loadingLogo.RetryBtn.SetActive(true);
+		loadingLogo.LogoAnimator.enabled = false;
+		loadingLogo.InfoText.color = Color.red;
+		loadingLogo.InfoText.text = "Network connection failed";
 		isConnecting = false;
 		Debug.LogWarningFormat("Cause of disconnection: {0}", cause);
 	}
