@@ -10,6 +10,8 @@ public class LobbyPlayer : MonoBehaviourPunCallbacks
 {
     [SerializeField] private RawImage avatar;
     [SerializeField] private Text text;
+    [SerializeField] private RawImage kickIcon;
+    [SerializeField] private Button kickBtn;
     public RawImage checkIcon;
 
     public Player Player { get; private set; }
@@ -19,6 +21,11 @@ public class LobbyPlayer : MonoBehaviourPunCallbacks
     {
         Player = player;
         text.text = player.NickName;
+        if (PhotonNetwork.LocalPlayer == PhotonNetwork.MasterClient)
+		{
+            kickIcon.enabled = true;
+            kickBtn.interactable = true;
+        }
         if (player.CustomProperties.ContainsKey("colour"))
         {
             StartCoroutine(DownloadAvatar(getPlayerAvatarUri(player.NickName, (string)player.CustomProperties["colour"])));
@@ -69,4 +76,9 @@ public class LobbyPlayer : MonoBehaviourPunCallbacks
         avatar.color = Color.white;
         avatar.texture = texture;
     }
+
+    public void OnClick_KickPlayer()
+	{
+        PhotonNetwork.CloseConnection(Player);
+	}
 }
