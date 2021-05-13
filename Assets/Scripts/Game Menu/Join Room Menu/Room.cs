@@ -40,7 +40,7 @@ public class Room : MonoBehaviour
 		roomImage.color = Theme.accentBgColour;
 	}
 
-	public void JoinRoom()
+	public void OnClick_JoinRoom()
 	{
 		PhotonNetwork.JoinRoom(RoomInfo.Name);
 	}

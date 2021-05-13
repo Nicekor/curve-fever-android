@@ -500,7 +500,7 @@ PrefabInstance:
     - target: {fileID: 462462035141365016, guid: 8582a7d7cacb7154ca9bb996a2961214,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: JoinRoom
+      value: OnClick_JoinRoom
       objectReference: {fileID: 0}
     - target: {fileID: 462462035141365016, guid: 8582a7d7cacb7154ca9bb996a2961214,
         type: 3}
