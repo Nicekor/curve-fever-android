@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Photon.Pun;
 
 [RequireComponent(typeof(LineRenderer))]
 [RequireComponent(typeof(EdgeCollider2D))]
@@ -18,6 +17,7 @@ public class Tail : Singleton<Tail>
     private bool draw = true;
     private IEnumerator drawCoroutine;
     private (float, float) deltaGap = (0.3f, 0.6f);
+    [SerializeField] private Snake snake;
 
     private void Start()
     {
@@ -34,12 +34,11 @@ public class Tail : Singleton<Tail>
 
     private void SetColour()
     {
-        string colourHex = (string)PhotonNetwork.LocalPlayer.CustomProperties["colour"];
-        Color playerColour;
-        ColorUtility.TryParseHtmlString("#" + colourHex, out playerColour);
+        Color playerColour = snake.GetPlayerColour();
         line.startColor = playerColour;
         line.endColor = playerColour;
     }
+
     private void SetPoint()
     {
         if (points.Count > 1)
