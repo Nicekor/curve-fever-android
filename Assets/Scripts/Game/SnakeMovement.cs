@@ -9,9 +9,11 @@ public class SnakeMovement : MonoBehaviourPun
 
     private float horizontal = 0f;
     private Dictionary<string, float> BOUNDARIES;
+    [SerializeField] private Snake snake;
 
     private void Awake()
     {
+        // todo: boundaries are not working properly
         float boundX = Camera.main.orthographicSize - 0.1f;
         float boundY = Camera.main.orthographicSize * 2 - 0.1f;
         BOUNDARIES = new Dictionary<string, float>() {
@@ -20,6 +22,8 @@ public class SnakeMovement : MonoBehaviourPun
             { "leftY", -boundY },
             { "rightY", boundY },
         };
+        //string headSpritePath = snake.GetHeadSpritePath(snake.GetPlayerColour());
+        //GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(headSpritePath);
     }
 
     void Update()
@@ -31,6 +35,7 @@ public class SnakeMovement : MonoBehaviourPun
     {
         if (photonView.IsMine)
         {
+            // fix boundaries are not working for every screen
             // boundaries
             if (transform.position.y <= BOUNDARIES["botX"] || transform.position.y >= BOUNDARIES["topX"] ||
             transform.position.x <= BOUNDARIES["leftY"] || transform.position.x >= BOUNDARIES["rightY"])
@@ -48,7 +53,7 @@ public class SnakeMovement : MonoBehaviourPun
 
     private void SetHorizontal()
     {
-        if (Input.touchCount > 0)
+        if (Input.touchCount > 0 && photonView.IsMine)
         {
             Touch touch = Input.GetTouch(0);
 
@@ -72,7 +77,7 @@ public class SnakeMovement : MonoBehaviourPun
         }
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("killsPlayer") && photonView.IsMine)
         {
