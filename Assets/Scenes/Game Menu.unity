@@ -2014,7 +2014,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a063e28a7a45ed24cae4a6081afa8f66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomNameText: {fileID: 1137822354}
+  roomNameInput: {fileID: 1795077694}
   roomPasswordText: {fileID: 1717344282}
   roomPrefab: {fileID: 7559701176744596004, guid: 9b643beeda0d9c24790081403ba8db0c,
     type: 3}
@@ -2199,7 +2199,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   material: {fileID: 2100000, guid: c8ae5b2132f8e5b47aa54de4fa5a67ff, type: 2}
-  radius: 70
+  radius: 25
 --- !u!1 &854381725
 GameObject:
   m_ObjectHideFlags: 0
@@ -4308,7 +4308,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   material: {fileID: 2100000, guid: c8ae5b2132f8e5b47aa54de4fa5a67ff, type: 2}
-  radius: 70
+  radius: 25
 --- !u!1 &1560638440
 GameObject:
   m_ObjectHideFlags: 0
@@ -5352,7 +5352,7 @@ MonoBehaviour:
   m_LineType: 0
   m_HideMobileInput: 0
   m_CharacterValidation: 0
-  m_CharacterLimit: 0
+  m_CharacterLimit: 25
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls: []
