@@ -12,7 +12,7 @@ public class RoomManager : Singleton<RoomManager>
 	private List<Room> roomsListing = new List<Room>();
 	private LoadingLogo loadingLogoInstance;
 
-	[SerializeField] private Text roomNameText;
+	[SerializeField] private InputField roomNameInput;
 	[SerializeField] private Text roomPasswordText;
 	[SerializeField] private Room roomPrefab;
 	[SerializeField] private Transform roomsListContent;
@@ -51,7 +51,7 @@ public class RoomManager : Singleton<RoomManager>
 
 	public void CreateMatchRoom()
 	{
-		string roomName = roomNameText.text.Trim();
+		string roomName = roomNameInput.text.Trim();
 		roomPassword = roomPasswordText.text;
 		bool roomExists = roomsListing.Exists(room => room.RoomInfo.Name == roomName);
 
@@ -65,6 +65,13 @@ public class RoomManager : Singleton<RoomManager>
 			Instantiate(errorPanelPrefab, roomOptionsPanel).Alert("The Room Name is missing!");
 			return;
 		}
+
+		if (roomName.Length > 25)
+		{
+			Instantiate(errorPanelPrefab, roomOptionsPanel).Alert("The Room Name must have less than 25 characters!");
+			return;
+		}
+
 		if (roomType.Equals("PRIVATE"))
 		{
 			if (string.IsNullOrEmpty(roomPassword))
