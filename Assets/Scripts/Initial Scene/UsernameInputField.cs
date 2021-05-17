@@ -5,7 +5,7 @@ using Photon.Pun;
 [RequireComponent(typeof(InputField))]
 public class UsernameInputField : MonoBehaviour
 {
-	[SerializeField] private GameObject emptyUsernameText;
+	[SerializeField] private Text errorLabel;
 	[SerializeField] private Button customGamesBtn;
 
 	private void OnEnable()
@@ -41,11 +41,19 @@ public class UsernameInputField : MonoBehaviour
 	{
 		if (string.IsNullOrEmpty(username.Trim()))
 		{
-			emptyUsernameText.SetActive(true);
+			errorLabel.text = "The username cannot be empty.";
+			errorLabel.enabled = true;
 			return false;
 		}
 
-		emptyUsernameText.SetActive(false);
+		if (username.Trim().Length > 10)
+		{
+			errorLabel.text = "The username must have less than 10 characters.";
+			errorLabel.enabled = true;
+			return false;
+		}
+
+		errorLabel.enabled = false;
 		return true;
 	}
 
