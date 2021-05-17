@@ -14,7 +14,7 @@ public class Launcher : MonoBehaviourPunCallbacks
 
 	private void Awake()
 	{
-        PhotonNetwork.AutomaticallySyncScene = true;
+		PhotonNetwork.AutomaticallySyncScene = true;
 		loadingLogo = Instantiate(loadingLogoPrefab, canvasTransform);
 		loadingLogo.RetryBtn.GetComponent<Button>().onClick.AddListener(Connect);
 	}
@@ -26,19 +26,12 @@ public class Launcher : MonoBehaviourPunCallbacks
 
 	public void Connect()
 	{
-		if (PhotonNetwork.IsConnected)
-		{
-			// join room
-		} 
-		else
-		{
-			loadingLogo.InfoText.color = Color.white;
-			loadingLogo.InfoText.text = "Connecting...";
-			loadingLogo.LogoAnimator.enabled = true;
-			loadingLogo.RetryBtn.SetActive(false);
-			isConnecting = PhotonNetwork.ConnectUsingSettings();
-			PhotonNetwork.GameVersion = gameVersion;
-		}
+		loadingLogo.InfoText.color = Color.white;
+		loadingLogo.InfoText.text = "Connecting...";
+		loadingLogo.LogoAnimator.enabled = true;
+		loadingLogo.RetryBtn.SetActive(false);
+		isConnecting = PhotonNetwork.ConnectUsingSettings();
+		PhotonNetwork.GameVersion = gameVersion;
 	}
 
 	public override void OnConnectedToMaster()
