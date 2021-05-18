@@ -15,7 +15,6 @@ public class Tail : Singleton<Tail>
     private List<Vector2> points;
     private EdgeCollider2D col;
     private bool draw = true;
-    private IEnumerator drawCoroutine;
     private (float, float) deltaGap = (0.3f, 0.6f);
     [SerializeField] private Snake snake;
 
@@ -28,8 +27,7 @@ public class Tail : Singleton<Tail>
 
         SetPoint();
 
-        drawCoroutine = SetDraw();
-        StartCoroutine(drawCoroutine);
+        StartCoroutine(SetDraw());
     }
 
     private void SetColour()
@@ -60,14 +58,11 @@ public class Tail : Singleton<Tail>
     {
         yield return new WaitForSeconds(Random.Range(3f, 5f));
         draw = false;
-        yield return new WaitForSeconds(Random.Range(deltaGap.Item1, deltaGap.Item2));
-        Instantiate(TailPrefab, transform.parent);
-        StopCoroutine(drawCoroutine);
-    }
-
-    public void StopDrawCoroutine()
-    {
-        if (drawCoroutine != null) StopCoroutine(drawCoroutine);
+		yield return new WaitForSeconds(Random.Range(deltaGap.Item1, deltaGap.Item2));
+        if (!snake.isSnakeDead())
+		{
+            Instantiate(TailPrefab, transform.parent);
+        }
     }
 
     private void Update()

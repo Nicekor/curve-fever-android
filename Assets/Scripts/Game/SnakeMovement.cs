@@ -63,12 +63,9 @@ public class SnakeMovement : MonoBehaviourPun
         if (collision.CompareTag("killsPlayer") && photonView.IsMine)
         {
             snake.SetDeadPlayer();
-            Tail.Instance.StopDrawCoroutine();
             speed = 0;
             rotationSpeed = 0;
-            GameManager.Instance.UpdateLeadearboard();
 
-            // todo: use singleton instead of this (this is expensive)
             //FindObjectOfType<GameManager>().EndGame();
         }
     }
