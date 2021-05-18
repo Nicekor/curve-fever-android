@@ -8,20 +8,10 @@ public class SnakeMovement : MonoBehaviourPun
     public float rotationSpeed = 200f;
 
     private float horizontal = 0f;
-    private Dictionary<string, float> BOUNDARIES;
     [SerializeField] private Snake snake;
 
     private void Awake()
     {
-        // todo: boundaries are not working properly
-        float boundX = Camera.main.orthographicSize - 0.1f;
-        float boundY = Camera.main.orthographicSize * 2 - 0.1f;
-        BOUNDARIES = new Dictionary<string, float>() {
-            { "topX",  boundX},
-            { "botX", -boundX },
-            { "leftY", -boundY },
-            { "rightY", boundY },
-        };
         //string headSpritePath = snake.GetHeadSpritePath(snake.GetPlayerColour());
         //GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(headSpritePath);
     }
@@ -35,16 +25,6 @@ public class SnakeMovement : MonoBehaviourPun
     {
         if (photonView.IsMine)
         {
-            // fix boundaries are not working for every screen
-            // boundaries
-            if (transform.position.y <= BOUNDARIES["botX"] || transform.position.y >= BOUNDARIES["topX"] ||
-            transform.position.x <= BOUNDARIES["leftY"] || transform.position.x >= BOUNDARIES["rightY"])
-            {
-                Tail.Instance.StopDrawCoroutine();
-                speed = 0;
-                rotationSpeed = 0;
-            }
-
             // input movement
             transform.Translate(Vector2.up * speed * Time.fixedDeltaTime, Space.Self);
             transform.Rotate(Vector3.forward * -horizontal * rotationSpeed * Time.fixedDeltaTime);
