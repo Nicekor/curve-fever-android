@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Photon.Realtime;
 
 public class SnakeMovement : MonoBehaviourPun
 {
@@ -61,10 +62,12 @@ public class SnakeMovement : MonoBehaviourPun
     {
         if (collision.CompareTag("killsPlayer") && photonView.IsMine)
         {
-            print("collision");
+            snake.SetDeadPlayer();
             Tail.Instance.StopDrawCoroutine();
             speed = 0;
             rotationSpeed = 0;
+            GameManager.Instance.UpdateLeadearboard();
+
             // todo: use singleton instead of this (this is expensive)
             //FindObjectOfType<GameManager>().EndGame();
         }

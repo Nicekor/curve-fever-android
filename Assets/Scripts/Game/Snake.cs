@@ -1,10 +1,11 @@
 ﻿using Photon.Pun;
+using Photon.Realtime;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Snake : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
 {
-    private Photon.Realtime.Player player;
+    private Player player;
 
     [SerializeField]
     private Dictionary<Color, string> headSpritesPaths = new Dictionary<Color, string>()
@@ -33,4 +34,9 @@ public class Snake : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
         print(colour.ToString());
         return headSpritesPaths[GetPlayerColour()];
     }
+
+    public void SetDeadPlayer()
+	{
+        player.CustomProperties["dead"] = true;
+	}
 }

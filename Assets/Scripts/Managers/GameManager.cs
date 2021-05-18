@@ -1,19 +1,46 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Photon.Pun;
+using Photon.Realtime;
 
 public class GameManager : Singleton<GameManager>
 {
-	public GameObject playerPrefab;
-	private bool hasEnded = false;
+	[SerializeField] private GameObject playerPrefab;
 	[SerializeField] private GameObject instructionsPanel;
+	[SerializeField] private Text countdownText;
 
-    private void Start()
+	private List<string> leaderboard = new List<string>();
+	private float currentTime = 0f;
+	private float startingTime = 3f;
+	private int numberOfPlayersInRoom;
+	private bool hasEnded = false;
+
+	private void Start()
     {
-		// todo: random position
+		numberOfPlayersInRoom = PhotonNetwork.CountOfPlayersInRooms;
+
+		currentTime = startingTime;
+		
+
 		StartCoroutine(StartGame());
     }
+
+	private void Update()
+	{
+		currentTime -= 1 * Time.deltaTime;
+		countdownText.text = currentTime.ToString("0");
+
+		if (currentTime <= 0)
+		{
+			countdownText.enabled = false;
+		}
+
+		// if numberOfPlayersInRoom == leadearboard.length => the game finished
+
+	}
 
 	IEnumerator StartGame()
 	{
@@ -42,5 +69,17 @@ public class GameManager : Singleton<GameManager>
 
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 
+	}
+
+	public void UpdateLeadearboard()
+	{
+		foreach (KeyValuePair<int, Player> player in PhotonNetwork.CurrentRoom.Players)
+		{
+			print("another player");
+			if (player.Value.CustomProperties["dead"] != null && (bool)player.Value.CustomProperties["dead"])
+			{
+				leaderboard.Add(player.Value.NickName);
+			}
+		}
 	}
 }
