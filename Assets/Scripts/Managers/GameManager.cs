@@ -12,21 +12,17 @@ public class GameManager : Singleton<GameManager>
 	[SerializeField] private GameObject instructionsPanel;
 	[SerializeField] private Text countdownText;
 
-	private List<string> leaderboard = new List<string>();
+	[SerializeField] private List<string> leaderboard = new List<string>();
 	private float currentTime = 0f;
 	private float startingTime = 3f;
-	private int numberOfPlayersInRoom;
 	private bool hasEnded = false;
 
 	private void Start()
-    {
-		numberOfPlayersInRoom = PhotonNetwork.CountOfPlayersInRooms;
-
+	{
 		currentTime = startingTime;
-		
 
 		StartCoroutine(StartGame());
-    }
+	}
 
 	private void Update()
 	{
@@ -37,9 +33,6 @@ public class GameManager : Singleton<GameManager>
 		{
 			countdownText.enabled = false;
 		}
-
-		// if numberOfPlayersInRoom == leadearboard.length => the game finished
-
 	}
 
 	IEnumerator StartGame()
@@ -54,14 +47,14 @@ public class GameManager : Singleton<GameManager>
 		Destroy(instructionsPanel);
 	}
 
-    public void EndGame()
+	public void EndGame()
 	{
 		if (hasEnded) return;
 		hasEnded = true;
 		StartCoroutine(PlayEndGameAnimation());
 	}
 
-	IEnumerator PlayEndGameAnimation ()
+	IEnumerator PlayEndGameAnimation()
 	{
 		Debug.Log("Game Over");
 
@@ -71,14 +64,16 @@ public class GameManager : Singleton<GameManager>
 
 	}
 
-	public void UpdateLeadearboard()
+	public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
 	{
-		foreach (KeyValuePair<int, Player> player in PhotonNetwork.CurrentRoom.Players)
+		if (targetPlayer != null && changedProps.ContainsKey("dead"))
 		{
-			print("another player");
-			if (player.Value.CustomProperties["dead"] != null && (bool)player.Value.CustomProperties["dead"])
+			leaderboard.Insert(0, targetPlayer.NickName);
+
+			// this does penis :D
+			if (leaderboard.Count == PhotonNetwork.CurrentRoom.PlayerCount)
 			{
-				leaderboard.Add(player.Value.NickName);
+				print("game over");
 			}
 		}
 	}
