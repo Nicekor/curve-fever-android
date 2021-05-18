@@ -2,6 +2,7 @@
 using Photon.Realtime;
 using System.Collections.Generic;
 using UnityEngine;
+using ExitGames.Client.Photon;
 
 public class Snake : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
 {
@@ -21,6 +22,11 @@ public class Snake : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
         player = info.Sender;
     }
 
+    public bool isSnakeDead()
+	{
+        return (bool)player.CustomProperties["dead"];
+	}
+
     public Color GetPlayerColour()
     {
         if (player == null) return Color.white;
@@ -37,6 +43,6 @@ public class Snake : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
 
     public void SetDeadPlayer()
 	{
-        player.CustomProperties["dead"] = true;
+        player.SetCustomProperties(new Hashtable { { "dead", true } });
 	}
 }
