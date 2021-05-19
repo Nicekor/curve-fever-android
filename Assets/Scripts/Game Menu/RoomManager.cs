@@ -76,7 +76,7 @@ public class RoomManager : Singleton<RoomManager>
 		{
 			if (string.IsNullOrEmpty(roomPassword))
 			{
-				Instantiate(errorPanelPrefab, roomOptionsPanel).Alert("The Room Name is missing!");
+				Instantiate(errorPanelPrefab, roomOptionsPanel).Alert("The Room Password is missing!");
 				return;
 			}
 
@@ -102,11 +102,6 @@ public class RoomManager : Singleton<RoomManager>
 	public override void OnCreatedRoom()
 	{
 		Debug.Log("Created room successfuly");
-	}
-
-	public void OnClick_JoinRoom(RoomInfo roomInfo)
-	{
-		PhotonNetwork.JoinRoom(roomInfo.Name);
 	}
 
 	public override void OnCreateRoomFailed(short returnCode, string message)
