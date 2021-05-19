@@ -9,7 +9,6 @@ public class Launcher : MonoBehaviourPunCallbacks
 	[SerializeField] private Transform canvasTransform;
 
 	private string gameVersion = "1";
-	private bool isConnecting;
 	private LoadingLogo loadingLogo;
 
 	private void Awake()
@@ -30,7 +29,7 @@ public class Launcher : MonoBehaviourPunCallbacks
 		loadingLogo.InfoText.text = "Connecting...";
 		loadingLogo.LogoAnimator.enabled = true;
 		loadingLogo.RetryBtn.SetActive(false);
-		isConnecting = PhotonNetwork.ConnectUsingSettings();
+		PhotonNetwork.ConnectUsingSettings();
 		PhotonNetwork.GameVersion = gameVersion;
 	}
 
@@ -38,10 +37,6 @@ public class Launcher : MonoBehaviourPunCallbacks
 	{
 		Destroy(loadingLogo.gameObject);
 		Debug.Log("Connecting Using Settings worked fine and I am now connected");
-		if (isConnecting)
-		{
-			isConnecting = false;
-		}
 	}
 
 	// Called after disconnecting from the Photon server. It could be a failure or an explicit disconnect call 
@@ -51,7 +46,6 @@ public class Launcher : MonoBehaviourPunCallbacks
 		loadingLogo.LogoAnimator.enabled = false;
 		loadingLogo.InfoText.color = Color.red;
 		loadingLogo.InfoText.text = "Network connection failed";
-		isConnecting = false;
 		Debug.LogWarningFormat("Cause of disconnection: {0}", cause);
 	}
 }
