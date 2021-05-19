@@ -347,6 +347,8 @@ MonoBehaviour:
   privateRoomIcon: {fileID: 8696709864891833897}
   joinBtnImg: {fileID: 7584424537907131244}
   joinBtnText: {fileID: 7584424536489424842}
+  joinPrivateRoomPanelPrefab: {fileID: 5005680399831974084, guid: 5b0bc14f7c471b242b937d0d5a99ab6d,
+    type: 3}
 --- !u!114 &56145978853653443
 MonoBehaviour:
   m_ObjectHideFlags: 0

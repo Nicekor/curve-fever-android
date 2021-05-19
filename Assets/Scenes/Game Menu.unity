@@ -4295,6 +4295,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   JoinRoomMenu: {fileID: 2029637309}
+  joinPrivateRoomPanel: {fileID: 0}
+  joinPrivateRoomBtn: {fileID: 0}
+  passwordInput: {fileID: 0}
 --- !u!114 &1540428901
 MonoBehaviour:
   m_ObjectHideFlags: 0

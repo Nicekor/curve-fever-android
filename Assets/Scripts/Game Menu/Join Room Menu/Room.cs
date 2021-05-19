@@ -10,6 +10,7 @@ public class Room : MonoBehaviour
 	[SerializeField] GameObject privateRoomIcon;
 	[SerializeField] Image joinBtnImg;
 	[SerializeField] Text joinBtnText;
+	[SerializeField] private JoinMatchBtnHandler joinPrivateRoomPanelPrefab;
 
 	private Image roomImage;
 
@@ -42,6 +43,25 @@ public class Room : MonoBehaviour
 
 	public void OnClick_JoinRoom()
 	{
+		if (RoomInfo.CustomProperties[RoomManager.ROOM_TYPE_PROP_KEY].Equals("PRIVATE"))
+		{
+			JoinMatchBtnHandler joinPrivateRoomPanel = Instantiate(joinPrivateRoomPanelPrefab, GetComponent<Transform>().root);
+			joinPrivateRoomPanel.joinPrivateRoomBtn.onClick.AddListener(() => JoinPrivateMatch(joinPrivateRoomPanel));
+			return;
+		}
 		PhotonNetwork.JoinRoom(RoomInfo.Name);
+	}
+
+	public void JoinPrivateMatch(JoinMatchBtnHandler joinPrivateRoomPanel)
+	{
+		if (RoomInfo.CustomProperties[RoomManager.ROOM_PW_PROP_KEY].Equals(joinPrivateRoomPanel.passwordInput.text))
+		{
+			PhotonNetwork.JoinRoom(RoomInfo.Name);
+			joinPrivateRoomPanel.joinPrivateRoomPanel.SetActive(false);
+		}
+		else
+		{
+			print("password incorrect");
+		}
 	}
 }
