@@ -9,6 +9,7 @@ public class JoinMatchBtnHandler : MonoBehaviour
 	[SerializeField] public GameObject joinPrivateRoomPanel;
 	[SerializeField] public Button joinPrivateRoomBtn;
 	[SerializeField] public InputField passwordInput;
+	[SerializeField] public ErrorPanel errorPanel;
 
 	public void ShowJoinRoomMenu()
 	{
@@ -18,19 +19,5 @@ public class JoinMatchBtnHandler : MonoBehaviour
 	public void TriggerPrivateRoomPanel(bool value)
 	{
 		joinPrivateRoomPanel.SetActive(value);
-	}
-
-	public void JoinPrivateRoom(RoomInfo roomInfo)
-	{
-		if (roomInfo.CustomProperties[RoomManager.ROOM_PW_PROP_KEY].Equals(passwordInput.text))
-		{
-			print("password correct");
-			print(roomInfo.Name);
-			PhotonNetwork.JoinRoom(roomInfo.Name);
-		}
-		else
-		{
-			print("password incorrect");
-		}
 	}
 }

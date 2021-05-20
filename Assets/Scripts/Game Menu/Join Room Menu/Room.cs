@@ -61,7 +61,7 @@ public class Room : MonoBehaviour
 		}
 		else
 		{
-			print("password incorrect");
+			Instantiate(joinPrivateRoomPanel.errorPanel, GetComponent<Transform>().root).Alert("Invalid Password");
 		}
 	}
 }

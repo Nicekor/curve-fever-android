@@ -1035,6 +1035,8 @@ MonoBehaviour:
   joinPrivateRoomPanel: {fileID: 1639863103320651238}
   joinPrivateRoomBtn: {fileID: 1639863102555990989}
   passwordInput: {fileID: 1639863102405647735}
+  errorPanel: {fileID: 8940973311350552834, guid: 58383442e2422074db6f97ce2df9314d,
+    type: 3}
 --- !u!1 &1639863103607639480
 GameObject:
   m_ObjectHideFlags: 0
