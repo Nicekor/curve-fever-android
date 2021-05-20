@@ -59,7 +59,6 @@ public class PlayersList : MonoBehaviourPunCallbacks
 	{
 		Player player = PhotonNetwork.LocalPlayer;
 		int randomIndex = PlayerManager.Instance.GetRandomColourIndex();
-		// todo: remove chosen ones instead of looping until I find a new one
 		int[] existingColourIndicesArray = (int[])PhotonNetwork.CurrentRoom.CustomProperties["existingColourIndices"];
 		while (existingColourIndicesArray.Contains(randomIndex))
 		{
@@ -131,7 +130,6 @@ public class PlayersList : MonoBehaviourPunCallbacks
 			SetReady(!ready);
 			photonView.RPC("RPC_ChangeReadyState", RpcTarget.MasterClient, PhotonNetwork.LocalPlayer, ready);
 		}
-
 	}
 
 	[PunRPC]

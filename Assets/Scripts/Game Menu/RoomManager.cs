@@ -96,7 +96,6 @@ public class RoomManager : Singleton<RoomManager>
 		roomOptions.CustomRoomPropertiesForLobby = new string[] { ROOM_TYPE_PROP_KEY, ROOM_PW_PROP_KEY };
 		roomOptions.CustomRoomProperties = new Hashtable { { ROOM_TYPE_PROP_KEY, roomType }, { ROOM_PW_PROP_KEY, roomPassword } };
 		PhotonNetwork.CreateRoom(roomName, roomOptions, TypedLobby.Default);
-
 	}
 
 	public override void OnCreatedRoom()
@@ -140,7 +139,6 @@ public class RoomManager : Singleton<RoomManager>
 
 	public override void OnRoomListUpdate(List<RoomInfo> roomList)
 	{
-		Debug.Log("onroomlistupdate from RoomManager - RoomInfo");
 		foreach (RoomInfo info in roomList)
 		{
 			if (info.RemovedFromList)

@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Photon.Pun;
-using Photon.Realtime;
 
 public class SnakeMovement : MonoBehaviourPun
 {
@@ -62,11 +60,10 @@ public class SnakeMovement : MonoBehaviourPun
     {
         if (collision.CompareTag("killsPlayer") && photonView.IsMine)
         {
+            print("collision with " + collision.name);
             snake.SetDeadPlayer();
             speed = 0;
             rotationSpeed = 0;
-
-            //FindObjectOfType<GameManager>().EndGame();
         }
     }
 }
