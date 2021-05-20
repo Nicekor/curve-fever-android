@@ -1,21 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 
 public class GameManager : Singleton<GameManager>
 {
-	[SerializeField] private GameObject playerPrefab;
 	[SerializeField] private GameObject instructionsPanel;
 	[SerializeField] private Text countdownText;
+	[SerializeField] private GameObject leaderboardPanel;
+	[SerializeField] private LeaderboardPlayer leaderboardPlayerPrefab;
+	[SerializeField] private Transform leaderboardContent;
+	[SerializeField] private GameObject instantiatePlayers;
 
 	[SerializeField] private List<string> leaderboard = new List<string>();
 	private float currentTime = 0f;
 	private float startingTime = 3f;
-	private bool hasEnded = false;
 
 	private void Start()
 	{
@@ -37,44 +38,34 @@ public class GameManager : Singleton<GameManager>
 
 	IEnumerator StartGame()
 	{
-		int xPos = Random.Range(-8, 9);
-		int yPos = Random.Range(-4, 4);
-
 		yield return new WaitForSeconds(3f);
 
-		PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(xPos, yPos, 0), Quaternion.identity, 0);
+		instantiatePlayers.SetActive(true);
 
 		Destroy(instructionsPanel);
 	}
 
-	public void EndGame()
+	// my attempt to the leaderboard
+	/*public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
 	{
-		if (hasEnded) return;
-		hasEnded = true;
-		StartCoroutine(PlayEndGameAnimation());
-	}
-
-	IEnumerator PlayEndGameAnimation()
-	{
-		Debug.Log("Game Over");
-
-		yield return new WaitForSeconds(1f);
-
-		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-
-	}
-
-	public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
-	{
-		if (targetPlayer != null && changedProps.ContainsKey("dead"))
+		if (targetPlayer != null && changedProps.ContainsKey("dead") && (bool)changedProps["dead"] == true)
 		{
-			leaderboard.Insert(0, targetPlayer.NickName);
+			print("snake died");
+			leaderboard.Add(targetPlayer.NickName);
 
-			// this does penis :D
+			// the leadearboard is populated when players lose which means that the game ends when it's full
 			if (leaderboard.Count == PhotonNetwork.CurrentRoom.PlayerCount)
 			{
 				print("game over");
+				LeaderboardPlayer leaderboardPlayer = Instantiate(leaderboardPlayerPrefab, leaderboardContent);
+				if (leaderboardPlayer != null)
+				{
+					int positionIndex = leaderboard.FindIndex(playerName => playerName.Equals(targetPlayer.NickName));
+					leaderboardPlayer.SetLeaderboardPlayerInfo(positionIndex + 1, targetPlayer);
+				}
+				leaderboardPanel.SetActive(true);
 			}
 		}
-	}
+	}*/
+
 }

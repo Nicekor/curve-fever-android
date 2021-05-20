@@ -160,6 +160,10 @@ namespace Photon.Pun.UtilityScripts
         public virtual void OnEnable()
         {
             PhotonNetwork.AddCallbackTarget(this);
+            if (AutoSpawnObjects && !PhotonNetwork.LocalPlayer.HasRejoined)
+            {
+                SpawnObjects();
+            }
         }
 
         public virtual void OnDisable()
