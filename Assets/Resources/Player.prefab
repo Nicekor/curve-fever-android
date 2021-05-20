@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6474608214623255788}
   - component: {fileID: 6256458120937640641}
+  - component: {fileID: 5580460041677913329}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -45,6 +46,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fe4448edeb799a40adc62f8f1e91c86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5580460041677913329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6474608214623255791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  observableSearch: 2
+  Synchronization: 2
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 3870407234798965299}
+  - {fileID: 2989704625798023083}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &6474608215162798428
 GameObject:
   m_ObjectHideFlags: 0
@@ -57,6 +82,7 @@ GameObject:
   - component: {fileID: 6474608215162798424}
   - component: {fileID: 6474608215162798425}
   - component: {fileID: 6474608215162798426}
+  - component: {fileID: 3870407234798965299}
   m_Layer: 0
   m_Name: Tail
   m_TagString: killsPlayer
@@ -207,6 +233,22 @@ EdgeCollider2D:
   m_Points:
   - {x: 100, y: 100}
   - {x: 100, y: 10}
+--- !u!114 &3870407234798965299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6474608215162798428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &6474608215883478016
 GameObject:
   m_ObjectHideFlags: 0
@@ -220,7 +262,6 @@ GameObject:
   - component: {fileID: 6474608215883478028}
   - component: {fileID: 6474608215883478030}
   - component: {fileID: 2008986809}
-  - component: {fileID: 1690421047706988088}
   - component: {fileID: 2989704625798023083}
   m_Layer: 0
   m_Name: Head
@@ -362,29 +403,6 @@ PolygonCollider2D:
       - {x: -0.127717, y: -0.2935127}
       - {x: 0.23318627, y: -0.2857881}
       - {x: 0.2717213, y: -0.1963936}
---- !u!114 &1690421047706988088
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6474608215883478016}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  observableSearch: 2
-  Synchronization: 3
-  OwnershipTransfer: 0
-  ObservedComponents:
-  - {fileID: 2989704625798023083}
-  viewIdField: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!114 &2989704625798023083
 MonoBehaviour:
   m_ObjectHideFlags: 0
